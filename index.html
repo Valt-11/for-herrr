@@ -94,6 +94,23 @@ button {
 @keyframes fall {
     to { transform: translateY(110vh); }
 }
+
+/* Confetti */
+.confetti {
+    position: fixed;
+    width: 10px;
+    height: 10px;
+    background-color: red;
+    top: 0;
+    animation: confetti-fall linear forwards;
+}
+
+@keyframes confetti-fall {
+    to {
+        transform: translateY(110vh) rotate(360deg);
+        opacity: 0;
+    }
+}
 </style>
 </head>
 
@@ -147,8 +164,8 @@ button {
 const board = document.getElementById("board");
 let played = false;
 
-// Pre-fill the board according to your layout
-const initialState = ["X", "O", "", "O", "X", "O", "X", "X", "O"];
+// Pre-fill the board according to your new layout
+const initialState = ["X", "X", "", "O", "O", "X", "O", "X", "O"];
 
 for (let i = 0; i < 9; i++) {
     const cell = document.createElement("div");
@@ -167,13 +184,16 @@ function play(cell) {
     if (played) return;
     played = true;
 
-    cell.textContent = "O"; // user places last O
+    cell.textContent = "X"; // user places last X
 
-    // Highlight the winning diagonal cells: 2,4,6
+    // Highlight the winning row: first row [0,1,2]
     const cells = document.querySelectorAll(".cell");
-    [2, 4, 6].forEach(i => {
+    [0,1,2].forEach(i => {
         cells[i].classList.add("win");
     });
+
+    // Launch confetti
+    launchConfetti();
 
     // After short delay, go to envelope section
     setTimeout(() => goTo("envelope"), 1200);
@@ -225,6 +245,20 @@ function startSnow() {
         document.body.appendChild(snow);
         setTimeout(() => snow.remove(), 5000);
     }, 200);
+}
+
+/* ---------- Confetti Animation ---------- */
+function launchConfetti() {
+    for (let i = 0; i < 100; i++) {
+        const confetti = document.createElement("div");
+        confetti.className = "confetti";
+        confetti.style.backgroundColor = `hsl(${Math.random()*360},100%,50%)`;
+        confetti.style.left = Math.random() * window.innerWidth + "px";
+        confetti.style.animationDuration = (Math.random()*3 + 2) + "s";
+        confetti.style.width = confetti.style.height = (Math.random()*8 + 5) + "px";
+        document.body.appendChild(confetti);
+        setTimeout(() => confetti.remove(), 5000);
+    }
 }
 </script>
 
