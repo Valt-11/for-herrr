@@ -66,13 +66,15 @@ button {
     background: #ffd1dc;
 }
 
-/* Message box */
+/* BIGGER Envelope / Message box */
 .message-box {
     background: rgba(255,255,255,0.95);
     color: #f38aa3;
-    padding: 20px;
-    border-radius: 20px;
-    max-width: 340px;
+    padding: 30px;
+    border-radius: 25px;
+    max-width: 520px;
+    font-size: 18px;
+    line-height: 1.6;
 }
 
 /* Hug GIF */
@@ -118,8 +120,7 @@ button {
 
 <!-- 🎄 Christmas Music -->
 <audio id="music" loop>
-  <source src="https://www.dropbox.com/scl/fi/cxpiz6swa4jkldveq1ztz/Die-With-A-Smile-PagalHits-AudioTrimmer.com.mp3?rlkey=jns2yx48r4enfrq58x2gcxmq0&st=l9c9f1rz&raw=1" type="audio/mpeg">
-  Your browser does not support the audio element.
+  <source src="https://www.dropbox.com/scl/fi/cxpiz6swa4jkldveq1ztz/Die-With-A-Smile-PagalHits-AudioTrimmer.com.mp3?raw=1" type="audio/mpeg">
 </audio>
 
 <section id="start" class="active">
@@ -141,7 +142,21 @@ button {
 <section id="message">
     <div class="message-box">
         <p>
-        Merry Christmas! I know I can't make something perfect, but this is a little try... Hopefully, you like it. You are the best gift in my life 😄. I don’t need any Christmas gift because I already have you. Take my love and care hehe. Be safe, okay?
+        Merry merry merry Christmas 🎄🎁 to my cute, kind, and amazing woman —  
+        so brave, strong, and at the same time so soft and caring 💖  
+
+        I am so glad to have you in my life.  
+        I honestly can’t even describe it in words 🥺🥹❤️  
+
+        I’m always here for you, right by your side.  
+        Don’t take too much stress — you can do it.  
+        You’re getting better day by day, and I’m really proud of you 🤍  
+
+        Everyone asks for gifts on Christmas,  
+        but I don’t want anything…  
+        because I already have the best gift I could ever ask for — **you** 🎁❤️  
+
+        So please take care of yourself and be safeee 🫂✨
         </p>
         <button onclick="goTo('final')">Continue</button>
     </div>
@@ -160,11 +175,10 @@ button {
 </section>
 
 <script>
-/* ---------- Tic Tac Toe Pre-filled Logic ---------- */
+/* ---------- Tic Tac Toe ---------- */
 const board = document.getElementById("board");
 let played = false;
 
-// Pre-fill the board according to your new layout
 const initialState = ["X", "X", "", "O", "O", "X", "O", "X", "O"];
 
 for (let i = 0; i < 9; i++) {
@@ -172,7 +186,6 @@ for (let i = 0; i < 9; i++) {
     cell.className = "cell";
     cell.textContent = initialState[i];
 
-    // Only the empty cell is clickable
     if (initialState[i] === "") {
         cell.onclick = () => play(cell);
     }
@@ -184,18 +197,12 @@ function play(cell) {
     if (played) return;
     played = true;
 
-    cell.textContent = "X"; // user places last X
+    cell.textContent = "X";
 
-    // Highlight the winning row: first row [0,1,2]
     const cells = document.querySelectorAll(".cell");
-    [0,1,2].forEach(i => {
-        cells[i].classList.add("win");
-    });
+    [0,1,2].forEach(i => cells[i].classList.add("win"));
 
-    // Launch confetti
     launchConfetti();
-
-    // After short delay, go to envelope section
     setTimeout(() => goTo("envelope"), 1200);
 }
 
@@ -206,13 +213,12 @@ function goTo(id) {
 
     if (id === "final") startSnow();
     if (id === "envelope") {
-        const audio = document.getElementById("music");
-        audio.play();
+        document.getElementById("music").play();
         document.getElementById("music-btn").textContent = "Pause Music ⏸️";
     }
 }
 
-/* ---------- Play/Pause MP3 Music ---------- */
+/* ---------- Music ---------- */
 function toggleMusic() {
     const audio = document.getElementById("music");
     const btn = document.getElementById("music-btn");
@@ -247,17 +253,17 @@ function startSnow() {
     }, 200);
 }
 
-/* ---------- Confetti Animation ---------- */
+/* ---------- Confetti ---------- */
 function launchConfetti() {
     for (let i = 0; i < 100; i++) {
-        const confetti = document.createElement("div");
-        confetti.className = "confetti";
-        confetti.style.backgroundColor = `hsl(${Math.random()*360},100%,50%)`;
-        confetti.style.left = Math.random() * window.innerWidth + "px";
-        confetti.style.animationDuration = (Math.random()*3 + 2) + "s";
-        confetti.style.width = confetti.style.height = (Math.random()*8 + 5) + "px";
-        document.body.appendChild(confetti);
-        setTimeout(() => confetti.remove(), 5000);
+        const c = document.createElement("div");
+        c.className = "confetti";
+        c.style.backgroundColor = `hsl(${Math.random()*360},100%,50%)`;
+        c.style.left = Math.random() * window.innerWidth + "px";
+        c.style.animationDuration = (Math.random()*3 + 2) + "s";
+        c.style.width = c.style.height = (Math.random()*8 + 5) + "px";
+        document.body.appendChild(c);
+        setTimeout(() => c.remove(), 5000);
     }
 }
 </script>
