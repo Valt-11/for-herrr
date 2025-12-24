@@ -99,14 +99,11 @@ button {
 
 <body>
 
-<!-- 🎄 YouTube Music Embed (hidden) -->
-<iframe id="ytplayer"
-    width="0" height="0"
-    src="https://www.youtube.com/embed/zgaCZOQCpp8?start=28&loop=1&playlist=zgaCZOQCpp8"
-    frameborder="0"
-    allow="autoplay; encrypted-media"
-    allowfullscreen>
-</iframe>
+<!-- 🎄 Christmas Music -->
+<audio id="music" loop>
+  <source src="https://docs.google.com/uc?export=download&id=1CKb8jGnphbanu2Cpf6FXLlv3SuzZ5c45" type="audio/mpeg">
+  Your browser does not support the audio element.
+</audio>
 
 <section id="start" class="active">
     <h1>🎄 Merry Christmas 🎄</h1>
@@ -121,7 +118,7 @@ button {
 <section id="envelope">
     <h1>You Won 💕</h1>
     <button onclick="goTo('message')">Open Envelope ✉️</button>
-    <button onclick="playYT()">Play Music 🎵</button>
+    <button id="music-btn" onclick="toggleMusic()">Play Music 🎵</button>
 </section>
 
 <section id="message">
@@ -182,13 +179,25 @@ function goTo(id) {
     document.getElementById(id).classList.add("active");
 
     if (id === "final") startSnow();
+    if (id === "envelope") {
+        const audio = document.getElementById("music");
+        audio.play();
+        document.getElementById("music-btn").textContent = "Pause Music ⏸️";
+    }
 }
 
-/* ---------- YouTube Music ---------- */
-function playYT() {
-    const iframe = document.getElementById('ytplayer');
-    // Reload the iframe with autoplay=1 to trigger sound
-    iframe.src = "https://www.youtube.com/embed/zgaCZOQCpp8?start=28&loop=1&playlist=zgaCZOQCpp8&autoplay=1";
+/* ---------- Play/Pause MP3 Music ---------- */
+function toggleMusic() {
+    const audio = document.getElementById("music");
+    const btn = document.getElementById("music-btn");
+
+    if (audio.paused) {
+        audio.play();
+        btn.textContent = "Pause Music ⏸️";
+    } else {
+        audio.pause();
+        btn.textContent = "Play Music 🎵";
+    }
 }
 
 /* ---------- Hug ---------- */
