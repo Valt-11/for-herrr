@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Merry Christmas ❤️</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: #f6b7c1;
+    color: #fff;
+    text-align: center;
+    overflow: hidden;
+}
+
+section {
+    display: none;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 20px;
+}
+
+section.active {
+    display: flex;
+}
+
+h1, p { margin: 10px; }
+
+button {
+    padding: 15px 35px;
+    font-size: 18px;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    background: #fff;
+    color: #f38aa3;
+    margin-top: 20px;
+}
+
+/* Tic Tac Toe */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(3, 90px);
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.cell {
+    width: 90px;
+    height: 90px;
+    background: #fff;
+    color: #f38aa3;
+    font-size: 42px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 18px;
+    cursor: pointer;
+}
+
+.cell.win {
+    background: #ffd1dc;
+}
+
+/* Message box */
+.message-box {
+    background: rgba(255,255,255,0.95);
+    color: #f38aa3;
+    padding: 20px;
+    border-radius: 20px;
+    max-width: 340px;
+}
+
+/* Hug GIF */
+.hug-gif {
+    width: 260px;
+    border-radius: 20px;
+    margin-top: 20px;
+}
+
+/* Snow */
+.snow {
+    position: fixed;
+    top: -10px;
+    color: white;
+    font-size: 1em;
+    animation: fall linear infinite;
+}
+
+@keyframes fall {
+    to { transform: translateY(110vh); }
+}
+</style>
+</head>
+
+<body>
+
+<!-- 🎄 Christmas Piano Music -->
+<audio id="music" loop>
+  <source src="https://cdn.pixabay.com/download/audio/2022/12/15/audio_51d0b7b9a5.mp3" type="audio/mpeg">
+</audio>
+
+<section id="start" class="active">
+    <h1>🎄 Merry Christmas 🎄</h1>
+    <button onclick="goTo('game')">Start</button>
+</section>
+
+<section id="game">
+    <h1>Let’s Play Tic Tac Toe 😄</h1>
+    <div class="grid" id="board"></div>
+</section>
+
+<section id="envelope">
+    <h1>You Won 💕</h1>
+    <button onclick="goTo('message')">Open Envelope ✉️</button>
+</section>
+
+<section id="message">
+    <div class="message-box">
+        <p>
+        Merry Christmas . yea ik i can't make that much good things but it's just a little try ...hopefully you liked it and yk You are the best gift that i got in my life hahaha . I don't need any gift for Christmas, cause i already have you ... Take my love care and Me hehe Be safee okaay Ji???
+        </p>
+        <button onclick="goTo('final')">Continue</button>
+    </div>
+</section>
+
+<section id="final">
+    <h1>YOU ARE THE BEST &lt;3</h1>
+    <button onclick="hug()">Hug 🤍</button>
+</section>
+
+<section id="hug">
+    <h1>Sending you the warmest hug 🫂</h1>
+    <img class="hug-gif"
+         src="https://drive.google.com/uc?export=view&id=1vRyv6_aSG0GdcQYCJ9DTnzfypnTMdGue"
+         alt="Cute Hug">
+</section>
+
+<script>
+/* ---------- Tic Tac Toe Logic (Cute Win) ---------- */
+const board = document.getElementById("board");
+let played = false;
+
+for (let i = 0; i < 9; i++) {
+    const cell = document.createElement("div");
+    cell.className = "cell";
+    cell.onclick = () => play(cell);
+    board.appendChild(cell);
+}
+
+function play(cell) {
+    if (played) return;
+    played = true;
+
+    cell.textContent = "O";
+
+    setTimeout(() => {
+        const cells = document.querySelectorAll(".cell");
+        const winLine = [0, 4, 8];
+
+        winLine.forEach(i => {
+            cells[i].textContent = "O";
+            cells[i].classList.add("win");
+        });
+
+        setTimeout(() => goTo("envelope"), 1200);
+    }, 600);
+}
+
+/* ---------- Navigation ---------- */
+function goTo(id) {
+    document.querySelectorAll("section").forEach(s => s.classList.remove("active"));
+    document.getElementById(id).classList.add("active");
+
+    document.getElementById("music").play();
+
+    if (id === "final") startSnow();
+}
+
+/* ---------- Hug ---------- */
+function hug() {
+    if (navigator.vibrate) {
+        navigator.vibrate([200, 100, 200, 100, 300]);
+    }
+    goTo("hug");
+}
+
+/* ---------- Snow ---------- */
+function startSnow() {
+    setInterval(() => {
+        const snow = document.createElement("div");
+        snow.className = "snow";
+        snow.innerHTML = "❄";
+        snow.style.left = Math.random() * window.innerWidth + "px";
+        snow.style.animationDuration = (Math.random() * 3 + 2) + "s";
+        document.body.appendChild(snow);
+        setTimeout(() => snow.remove(), 5000);
+    }, 200);
+}
+</script>
+
+</body>
+</html>
