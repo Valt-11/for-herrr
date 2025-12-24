@@ -99,10 +99,14 @@ button {
 
 <body>
 
-<!-- 🎄 Christmas Piano Music -->
-<audio id="music" loop>
-  <source src="https://cdn.pixabay.com/download/audio/2022/12/15/audio_51d0b7b9a5.mp3" type="audio/mpeg">
-</audio>
+<!-- 🎄 YouTube Music Embed (hidden) -->
+<iframe id="ytplayer"
+    width="0" height="0"
+    src="https://www.youtube.com/embed/zgaCZOQCpp8?start=28&loop=1&playlist=zgaCZOQCpp8"
+    frameborder="0"
+    allow="autoplay; encrypted-media"
+    allowfullscreen>
+</iframe>
 
 <section id="start" class="active">
     <h1>🎄 Merry Christmas 🎄</h1>
@@ -117,12 +121,13 @@ button {
 <section id="envelope">
     <h1>You Won 💕</h1>
     <button onclick="goTo('message')">Open Envelope ✉️</button>
+    <button onclick="playYT()">Play Music 🎵</button>
 </section>
 
 <section id="message">
     <div class="message-box">
         <p>
-        Merry Christmas . yea ik i can't make that much good things but it's just a little try ...hopefully you liked it and yk You are the best gift that i got in my life hahaha . I don't need any gift for Christmas, cause i already have you ... Take my love care and Me hehe Be safee okaay Ji???
+        Merry Christmas! I know I can't make something perfect, but this is a little try... Hopefully, you like it. You are the best gift in my life 😄. I don’t need any Christmas gift because I already have you. Take my love and care hehe. Be safe, okay?
         </p>
         <button onclick="goTo('final')">Continue</button>
     </div>
@@ -140,11 +145,8 @@ button {
          alt="Cute Teddy Hug GIF">
 </section>
 
-
-
-
 <script>
-/* ---------- Tic Tac Toe Logic (Cute Win) ---------- */
+/* ---------- Tic Tac Toe Logic ---------- */
 const board = document.getElementById("board");
 let played = false;
 
@@ -179,9 +181,14 @@ function goTo(id) {
     document.querySelectorAll("section").forEach(s => s.classList.remove("active"));
     document.getElementById(id).classList.add("active");
 
-    document.getElementById("music").play();
-
     if (id === "final") startSnow();
+}
+
+/* ---------- YouTube Music ---------- */
+function playYT() {
+    const iframe = document.getElementById('ytplayer');
+    // Reload the iframe with autoplay=1 to trigger sound
+    iframe.src = "https://www.youtube.com/embed/zgaCZOQCpp8?start=28&loop=1&playlist=zgaCZOQCpp8&autoplay=1";
 }
 
 /* ---------- Hug ---------- */
