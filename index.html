@@ -105,7 +105,6 @@ button {
   Your browser does not support the audio element.
 </audio>
 
-
 <section id="start" class="active">
     <h1>🎄 Merry Christmas 🎄</h1>
     <button onclick="goTo('game')">Start</button>
@@ -144,14 +143,23 @@ button {
 </section>
 
 <script>
-/* ---------- Tic Tac Toe Logic ---------- */
+/* ---------- Tic Tac Toe Pre-filled Logic ---------- */
 const board = document.getElementById("board");
 let played = false;
+
+// Pre-fill the board according to your layout
+const initialState = ["X", "O", "", "O", "X", "O", "X", "X", "O"];
 
 for (let i = 0; i < 9; i++) {
     const cell = document.createElement("div");
     cell.className = "cell";
-    cell.onclick = () => play(cell);
+    cell.textContent = initialState[i];
+
+    // Only the empty cell is clickable
+    if (initialState[i] === "") {
+        cell.onclick = () => play(cell);
+    }
+
     board.appendChild(cell);
 }
 
@@ -159,19 +167,16 @@ function play(cell) {
     if (played) return;
     played = true;
 
-    cell.textContent = "O";
+    cell.textContent = "O"; // user places last O
 
-    setTimeout(() => {
-        const cells = document.querySelectorAll(".cell");
-        const winLine = [0, 4, 8];
+    // Highlight the winning diagonal cells: 2,4,6
+    const cells = document.querySelectorAll(".cell");
+    [2, 4, 6].forEach(i => {
+        cells[i].classList.add("win");
+    });
 
-        winLine.forEach(i => {
-            cells[i].textContent = "O";
-            cells[i].classList.add("win");
-        });
-
-        setTimeout(() => goTo("envelope"), 1200);
-    }, 600);
+    // After short delay, go to envelope section
+    setTimeout(() => goTo("envelope"), 1200);
 }
 
 /* ---------- Navigation ---------- */
